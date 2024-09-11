@@ -20,6 +20,17 @@ The JSON file should be an array of objects with the following structure:
     "name": "Peter Petrov",
     "age": 30,
     "phone": "89502361271"
-  },
-  ...
+  },  
 ]
+```
+
+### XML
+The XML file should have a root element <People> with multiple <Person> elements, each containing <Name>, <Age>, and <Phone> elements:
+
+<People>
+  <Person>
+    <Name>Peter Petrov</Name>
+    <Age>30</Age>
+    <Phone>89502361271</Phone>
+  </Person>
+</People>
