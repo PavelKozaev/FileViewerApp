@@ -1,4 +1,5 @@
-﻿using FileViewerApp.Models;
+﻿using Newtonsoft.Json;
+using FileViewerApp.Models;
 using FileViewerApp.Utils;
 
 namespace FileViewerApp.Services
@@ -16,22 +17,45 @@ namespace FileViewerApp.Services
             };
         }
 
-        public IEnumerable<FileDataModel> GetFileData(string filePath)
-        {
-            using (var reader = new StreamReader(filePath))
+        public List<FileDataModel> GetFileData(string filePath)
+        {            
+            var fileExtension = Path.GetExtension(filePath).ToLower();
+
+            var fileContent = File.ReadAllText(filePath);
+
+            try
             {
-                if (filePath.EndsWith(".json"))
-                    return JsonXmlParser.ParseJson(reader.ReadToEnd());
-                else if (filePath.EndsWith(".xml"))
-                    return JsonXmlParser.ParseXml(reader.ReadToEnd());
+                if (fileExtension == ".json")
+                {
+                    return JsonXmlParser.ParseJson(fileContent).ToList();
+                }
+                else if (fileExtension == ".xml")
+                {
+                    return JsonXmlParser.ParseXml(fileContent).ToList();
+                }
                 else
-                    throw new NotSupportedException("File format not supported.");
+                {
+                    MessageBox.Show("Unsupported file format.");
+                    return new List<FileDataModel>();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to parse file: {ex.Message}");
+                return new List<FileDataModel>();
             }
         }
 
-        public IEnumerable<FileDataModel> FilterData(IQueryable<FileDataModel> data, string criteria)
+        public IEnumerable<FileDataModel> FilterData(IEnumerable<FileDataModel> data, string criteria)
         {
-            return data.Where(d => d.Name.Contains(criteria) || d.Age.ToString().Contains(criteria) || d.Phone.Contains(criteria)).ToList();
+            if (int.TryParse(criteria, out int age))
+            {
+                return data.Where(d => d.Age == age);
+            }
+            else
+            {
+                return data.Where(d => d.Name.Contains(criteria, StringComparison.OrdinalIgnoreCase));
+            }
         }
     }
 }

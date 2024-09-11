@@ -16,9 +16,9 @@ namespace FileViewerApp.Utils
             var xdoc = XDocument.Parse(xmlContent);
             return xdoc.Descendants("Person").Select(x => new FileDataModel
             {
-                Name = (string)x.Element("name"),
-                Age = (int)x.Element("age"),
-                Phone = (string)x.Element("phone")
+                Name = (string)x.Element("Name"), 
+                Age = (int)x.Element("Age"),
+                Phone = (string)x.Element("Phone")
             });
         }
     }
