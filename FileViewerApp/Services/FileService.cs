@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using FileViewerApp.Models;
+﻿using FileViewerApp.Models;
 using FileViewerApp.Utils;
 
 namespace FileViewerApp.Services
