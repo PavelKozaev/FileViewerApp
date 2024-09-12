@@ -13,7 +13,7 @@ namespace FileViewerApp
             _fileService = new FileService();
         }
 
-        private void btnLoadFile_Click(object sender, EventArgs e)
+        private async void btnLoadFile_Click(object sender, EventArgs e)
         {
             string filePath = txtFilePath.Text;
             if (!File.Exists(filePath))
@@ -25,21 +25,21 @@ namespace FileViewerApp
             var fileInfo = _fileService.GetFileInfo(filePath);
             lblFileInfo.Text = $"File: {fileInfo.FileName}, Size: {fileInfo.Size} bytes, Created: {fileInfo.CreatedDate}";
 
-            var data = _fileService.GetFileData(filePath);
+            var data = await _fileService.GetFileDataAsync(filePath);
             dgvFileData.DataSource = data.ToList();
 
             lblFirstElement.Text = $"First: {data.FirstOrDefault()?.ToString() ?? "No data"}";
             lblLastElement.Text = $"Last: {data.LastOrDefault()?.ToString() ?? "No data"}";
         }
 
-        private void btnFilter_Click(object sender, EventArgs e)
+        private async void btnFilter_Click(object sender, EventArgs e)
         {
             string filterCriteria = txtFilterCriteria.Text;
             var data = dgvFileData.DataSource as IEnumerable<FileDataModel>;
 
             if (data != null)
             {
-                var filteredData = _fileService.FilterData(data, filterCriteria);
+                var filteredData = await _fileService.FilterDataAsync(data, filterCriteria);
                 dgvFileData.DataSource = filteredData.ToList();
 
                 lblFilteredElements.Text = int.TryParse(filterCriteria, out int age)

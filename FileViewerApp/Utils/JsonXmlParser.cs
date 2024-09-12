@@ -6,19 +6,22 @@ namespace FileViewerApp.Utils
 {
     public static class JsonXmlParser
     {
-        public static IEnumerable<FileDataModel> ParseJson(string jsonContent)
+        public static async Task<IEnumerable<FileDataModel>> ParseJsonAsync(string jsonContent)
         {
-            return JsonConvert.DeserializeObject<List<FileDataModel>>(jsonContent);
+            return await Task.Run(() => JsonConvert.DeserializeObject<List<FileDataModel>>(jsonContent));
         }
 
-        public static IEnumerable<FileDataModel> ParseXml(string xmlContent)
+        public static async Task<IEnumerable<FileDataModel>> ParseXmlAsync(string xmlContent)
         {
-            var xdoc = XDocument.Parse(xmlContent);
-            return xdoc.Descendants("Person").Select(x => new FileDataModel
+            return await Task.Run(() =>
             {
-                Name = (string)x.Element("Name"), 
-                Age = (int)x.Element("Age"),
-                Phone = (string)x.Element("Phone")
+                var xdoc = XDocument.Parse(xmlContent);
+                return xdoc.Descendants("Person").Select(x => new FileDataModel
+                {
+                    Name = (string)x.Element("Name"),
+                    Age = (int)x.Element("Age"),
+                    Phone = (string)x.Element("Phone")
+                });
             });
         }
     }
