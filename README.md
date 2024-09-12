@@ -17,10 +17,15 @@ The JSON file should be an array of objects with the following structure:
 ```json
 [
   {
-    "name": "Peter Petrov",
+    "name": "Иван Иванов",
     "age": 30,
     "phone": "89502361271"
-  },  
+  },
+  {
+    "name": "Петр Петров",
+    "age": 25,
+    "phone": "89502361272"
+  }
 ]
 ```
 
@@ -29,9 +34,14 @@ The XML file should have a root element People with multiple Person elements, ea
 ```
 <People>
   <Person>
-    <Name>Peter Petrov</Name>
+    <Name>Иван Иванов</Name>
     <Age>30</Age>
     <Phone>89502361271</Phone>
+  </Person>
+  <Person>
+    <Name>Петр Петров</Name>
+    <Age>25</Age>
+    <Phone>89502361272</Phone>
   </Person>
 </People>
 ```

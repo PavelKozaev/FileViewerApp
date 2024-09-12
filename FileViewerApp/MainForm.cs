@@ -40,7 +40,7 @@ namespace FileViewerApp
             if (data != null)
             {
                 var filteredData = await _fileService.FilterDataAsync(data, filterCriteria);
-                dgvFileData.DataSource = filteredData.ToList();
+                //dgvFileData.DataSource = filteredData.ToList();
 
                 lblFilteredElements.Text = int.TryParse(filterCriteria, out int age)
                     ? $"Age = {age}: {string.Join(", ", filteredData.Select(d => d.Name))}"
