@@ -5,12 +5,12 @@ namespace FileViewerApp
 {
     public partial class MainForm : Form
     {
-        private readonly FileService _fileService;
+        private readonly IFileService _fileService;
 
-        public MainForm()
+        public MainForm(IFileService fileService)
         {
             InitializeComponent();
-            _fileService = new FileService();
+            _fileService = fileService;
         }
 
         private async void btnLoadFile_Click(object sender, EventArgs e)

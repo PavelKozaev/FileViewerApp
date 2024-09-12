@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace FileViewerApp.Services
 {
-    public class FileService
+    public class FileService : IFileService
     {
         public FileInfoModel GetFileInfo(string filePath)
         {

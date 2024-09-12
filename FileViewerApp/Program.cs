@@ -1,3 +1,5 @@
+using FileViewerApp.Services;
+
 namespace FileViewerApp
 {
     internal static class Program
@@ -7,7 +9,8 @@ namespace FileViewerApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            IFileService fileService = new FileService();
+            Application.Run(new MainForm(fileService));
         }
     }
 }
